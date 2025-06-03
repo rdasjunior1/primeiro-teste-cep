@@ -1,27 +1,32 @@
-"""API para consultar CEPs utilizando a API do ViaCEP com autenticação via token."""
-from fastapi import FastAPI, Request, HTTPException
-import requests
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+import os
 
+# carrega as variáveis de ambiente do .env
+load_dotenv()
+api_token = os.getenv("API_TOKEN")
+
+# Verifica se o token foi carregado
+if not api_token:
+    raise ValueError("API_TOKEN não definido no arquivo .env")
+
+# Instância do FastAPI
 app = FastAPI()
 
-TOKEN = "cavalo branco"
+# Middleware CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-@app.get("/cep/{cep}")
-def consultar_cep(cep: str, request: Request):
-    
-    """Consulta informações de endereço a partir do CEP informado.
-    Requer token de autenticação via header."""
-    
-    auth = request.headers.get("Authorization")
-    if not auth or auth != f"Bearer {TOKEN}":
-        raise HTTPException(status_code=401, detail="Não autorizado")
+# Importa e inclui as rotas
+from routers import ceps
+app.include_router(ceps.router, prefix="/cep")
 
-    response = requests.get(f"https://viacep.com.br/ws/{cep}/json/", timeout=5)
-
-    if response.status_code == 400 or "erro" in response.text:
-        raise HTTPException(status_code=404, detail="CEP não encontrado")
-
-    if response.status_code != 200:
-        raise HTTPException(status_code=500, detail="Erro ao consultar o ViaCEP")
-
-    return response.json()
+@app.get("/")
+def root():
+    return {"mensagem": "API do ViaCep funcionando"}
