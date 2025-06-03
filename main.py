@@ -5,6 +5,7 @@ import os
 
 # carrega as variáveis de ambiente do .env
 load_dotenv()
+
 api_token = os.getenv("API_TOKEN")
 
 # Verifica se o token foi carregado

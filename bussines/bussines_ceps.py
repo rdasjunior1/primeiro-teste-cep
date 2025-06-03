@@ -22,7 +22,8 @@ def buscar_cep(cep: str) -> CepResponse:
         ibge=dados_cep.get("ibge", ""),
         gia=dados_cep.get("gia", ""),       
         ddd=dados_cep.get("ddd", ""),         
-        siafi=dados_cep.get("siafi", "")     
+        siafi=dados_cep.get("siafi", ""),     
+        fonte=dados_cep.get("fonte", "")
 )
 
 async def pegar_mais_rapido(cep: str):
@@ -37,4 +38,4 @@ async def pegar_mais_rapido(cep: str):
     for task in pending:
         task.cancel()
 
-    return list(done)[0].result()  
+    return list(done)[0].result()
