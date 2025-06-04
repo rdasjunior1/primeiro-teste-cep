@@ -7,4 +7,4 @@ Projeto simples em FastAPI para consultar CEPs usando a API do ViaCEP com autent
 ### 1. Clone o repositório
 ```bash
 git clone https://github.com/rdasjunior1/projeto-viacep.git
-cd projeto-viacep
+cd projeto-viacep# Teste de commit
