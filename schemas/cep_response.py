@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import Optional
+from fastapi import HTTPException
 
 class CepResponse(BaseModel):
     cep: str
