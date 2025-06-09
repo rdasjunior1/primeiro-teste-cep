@@ -11,4 +11,4 @@ class Settings(BaseSettings):
         env_file = ".env"
 
 settings = Settings()
-print("🔍 Token dentro do dependencies.py:", settings.api_token)
+
