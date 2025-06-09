@@ -1,19 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from dotenv import load_dotenv
-from routers import ceps
 import os
 
-# carrega as variáveis de ambiente do .env
-load_dotenv()
-
-api_token = os.getenv("API_TOKEN")
-
-# Verifica se o token foi carregado
-if not api_token:
-    raise ValueError("API_TOKEN não definido no arquivo .env")
-
-# Instância do FastAPI
 app = FastAPI()
 
 # Middleware CORS
